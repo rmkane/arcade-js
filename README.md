@@ -21,6 +21,12 @@ Based on [Gists][gists] by Steven Lambert.
 
 See: <https://www.toptal.com/developers/keycode>
 
+## Todo
+
+- Bejeweled: <https://codepen.io/uname79/pen/ZEEMjor>
+- Space Invaders: <https://codepen.io/adelciotto/pen/WNzRYy>
+- Sudoku: <https://medium.com/@math625f/writing-a-simple-sudoku-application-in-javascript-b2b40099ba7e>
+
 ## See also
 
 - [Steven's blog](https://blog.sklambert.com/)
