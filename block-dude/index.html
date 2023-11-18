@@ -310,15 +310,15 @@
         playerDir = { row: 0, col: 0 };
 
         // left arrow key
-        if (e.which === 37) {
+        if (e.code === "ArrowLeft") {
           playerDir.col = -1;
         }
         // right arrow key
-        else if (e.which === 39) {
+        else if (e.code === "ArrowRight") {
           playerDir.col = 1;
         }
         // down arrow key
-        else if (e.which === 40) {
+        else if (e.code === "ArrowDown") {
           const nextCol = playerFacing + playerPos.col;
           const nextCell = cells[playerPos.row][nextCol];
           const cellAbove = cells[playerPos.row - 1][nextCol];

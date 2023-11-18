@@ -358,20 +358,20 @@
       // listen to keyboard events to move frogger
       document.addEventListener("keydown", function (e) {
         // left arrow key
-        if (e.which === 37) {
+        if (e.code === "ArrowLeft") {
           frogger.x -= grid;
         }
         // right arrow key
-        else if (e.which === 39) {
+        else if (e.code === "ArrowRight") {
           frogger.x += grid;
         }
 
         // up arrow key
-        else if (e.which === 38) {
+        else if (e.code === "ArrowUp") {
           frogger.y -= grid;
         }
         // down arrow key
-        else if (e.which === 40) {
+        else if (e.code === "ArrowDown") {
           frogger.y += grid;
         }
 

@@ -217,18 +217,18 @@
       // listen to keyboard events to move the paddle
       document.addEventListener("keydown", function (e) {
         // left arrow key
-        if (e.which === 37) {
+        if (e.code === "ArrowLeft") {
           paddle.dx = -3;
         }
         // right arrow key
-        else if (e.which === 39) {
+        else if (e.code === "ArrowRight") {
           paddle.dx = 3;
         }
 
         // space key
         // if they ball is not moving, we can launch the ball using the space key. ball
         // will move towards the bottom right to start
-        if (ball.dx === 0 && ball.dy === 0 && e.which === 32) {
+        if (ball.dx === 0 && ball.dy === 0 && e.code === "Space") {
           ball.dx = ball.speed;
           ball.dy = ball.speed;
         }
@@ -236,7 +236,7 @@
 
       // listen to keyboard events to stop the paddle if key is released
       document.addEventListener("keyup", function (e) {
-        if (e.which === 37 || e.which === 39) {
+        if (e.code === "ArrowLeft" || e.code === "ArrowRight") {
           paddle.dx = 0;
         }
       });

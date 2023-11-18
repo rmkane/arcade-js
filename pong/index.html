@@ -170,31 +170,31 @@
       // listen to keyboard events to move the paddles
       document.addEventListener("keydown", function (e) {
         // up arrow key
-        if (e.which === 38) {
+        if (e.code === "ArrowUp") {
           rightPaddle.dy = -paddleSpeed;
         }
         // down arrow key
-        else if (e.which === 40) {
+        else if (e.code === "ArrowDown") {
           rightPaddle.dy = paddleSpeed;
         }
 
         // w key
-        if (e.which === 87) {
+        if (e.code === "KeyW") {
           leftPaddle.dy = -paddleSpeed;
         }
         // a key
-        else if (e.which === 83) {
+        else if (e.code === "KeyS") {
           leftPaddle.dy = paddleSpeed;
         }
       });
 
       // listen to keyboard events to stop the paddle if key is released
       document.addEventListener("keyup", function (e) {
-        if (e.which === 38 || e.which === 40) {
+        if (e.code === "ArrowUp" || e.code === "ArrowDown") {
           rightPaddle.dy = 0;
         }
 
-        if (e.which === 83 || e.which === 87) {
+        if (e.code === "KeyW" || e.code === "KeyS") {
           leftPaddle.dy = 0;
         }
       });

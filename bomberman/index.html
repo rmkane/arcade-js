@@ -394,24 +394,24 @@
         let col = player.col;
 
         // left arrow key
-        if (e.which === 37) {
+        if (e.code === "ArrowLeft") {
           col--;
         }
         // up arrow key
-        else if (e.which === 38) {
+        else if (e.code === "ArrowUp") {
           row--;
         }
         // right arrow key
-        else if (e.which === 39) {
+        else if (e.code === "ArrowRight") {
           col++;
         }
         // down arrow key
-        else if (e.which === 40) {
+        else if (e.code === "ArrowDown") {
           row++;
         }
         // space key (bomb)
         else if (
-          e.which === 32 &&
+          e.code === "Space" &&
           !cells[row][col] &&
           // count the number of bombs the player has placed
           entities.filter((entity) => {
