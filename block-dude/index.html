@@ -358,9 +358,15 @@
               row = row - 1;
             }
 
-            cells[playerPos.row - 1][playerPos.col] = types.empty;
-            cells[row][nextCol] = types.block;
-            carryingBlock = false;
+            // Legal placement
+            if (
+              cells[row][nextCol] !== types.wall &&
+              cells[row][nextCol] !== types.block
+            ) {
+              cells[playerPos.row - 1][playerPos.col] = types.empty;
+              cells[row][nextCol] = types.block;
+              carryingBlock = false;
+            }
           }
         }
       });
