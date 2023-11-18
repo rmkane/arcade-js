@@ -17,6 +17,10 @@ Based on [Gists][gists] by Steven Lambert.
 - [Sokoban](sokoban)
 - [Tetris](tetris)
 
+## Keycode checker
+
+See: <https://www.toptal.com/developers/keycode>
+
 ## See also
 
 - [Steven's blog](https://blog.sklambert.com/)
