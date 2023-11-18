@@ -153,9 +153,32 @@
         context.fillText("GAME OVER!", canvas.width / 2, canvas.height / 2);
       }
 
+      function standardizeColor(str) {
+        const ctx = document.createElement("canvas").getContext("2d");
+        ctx.fillStyle = str;
+        return ctx.fillStyle;
+      }
+
+      function hexToRgb(hex) {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result
+          ? {
+              r: parseInt(result[1], 16),
+              g: parseInt(result[2], 16),
+              b: parseInt(result[3], 16),
+            }
+          : null;
+      }
+
+      function applyTransparency(color, alpha) {
+        const { r, g, b } = hexToRgb(standardizeColor(color));
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+      }
+
       const canvas = document.getElementById("game");
       const context = canvas.getContext("2d");
       const grid = 32;
+      const inset = 1;
       const tetrominoSequence = [];
 
       // keep track of what is in every cell of the game using a 2d array
@@ -222,6 +245,9 @@
         L: "orange",
       };
 
+      const GRID_ROWS = 20;
+      const GRID_COLS = 10;
+
       let count = 0;
       let tetromino = getNextTetromino();
       let rAF = null; // keep track of the animation frame so we can cancel it
@@ -230,17 +256,43 @@
       // game loop
       function loop() {
         rAF = requestAnimationFrame(loop);
-        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.fillStyle = "#222";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+
+        for (let row = 0; row <= GRID_ROWS; row++) {
+          const y = row * grid;
+          context.strokeStyle = "#333";
+          context.lineWidth = inset * 2;
+          context.beginPath();
+          context.moveTo(0, y);
+          context.lineTo(canvas.width, y);
+          context.stroke();
+        }
+
+        for (let col = 0; col <= GRID_COLS; col++) {
+          const x = col * grid;
+          context.strokeStyle = "#333";
+          context.lineWidth = inset * 2;
+          context.beginPath();
+          context.moveTo(x, 0);
+          context.lineTo(x, canvas.height);
+          context.stroke();
+        }
 
         // draw the playfield
-        for (let row = 0; row < 20; row++) {
-          for (let col = 0; col < 10; col++) {
+        for (let row = 0; row < GRID_ROWS; row++) {
+          for (let col = 0; col < GRID_COLS; col++) {
             if (playfield[row][col]) {
               const name = playfield[row][col];
               context.fillStyle = colors[name];
 
               // drawing 1 px smaller than the grid creates a grid effect
-              context.fillRect(col * grid, row * grid, grid - 1, grid - 1);
+              context.fillRect(
+                col * grid + inset,
+                row * grid + inset,
+                grid - inset * 2,
+                grid - inset * 2
+              );
             }
           }
         }
@@ -251,6 +303,25 @@
           if (++count > 35) {
             tetromino.row++;
             count = 0;
+          }
+
+          // Show a ghost piece so it's easier to see where the tetromino will land
+          let ghostRow = tetromino.row;
+          while (isValidMove(tetromino.matrix, ghostRow + 1, tetromino.col)) {
+            ghostRow++;
+          }
+          context.fillStyle = applyTransparency(colors[tetromino.name], 0.25);
+          for (let row = 0; row < tetromino.matrix.length; row++) {
+            for (let col = 0; col < tetromino.matrix[row].length; col++) {
+              if (tetromino.matrix[row][col]) {
+                context.fillRect(
+                  (tetromino.col + col) * grid + inset,
+                  (ghostRow + row) * grid + inset,
+                  grid - inset * 2,
+                  grid - inset * 2
+                );
+              }
+            }
 
             // place piece if it runs into anything
             if (!isValidMove(tetromino.matrix, tetromino.row, tetromino.col)) {
@@ -266,10 +337,10 @@
               if (tetromino.matrix[row][col]) {
                 // drawing 1 px smaller than the grid creates a grid effect
                 context.fillRect(
-                  (tetromino.col + col) * grid,
-                  (tetromino.row + row) * grid,
-                  grid - 1,
-                  grid - 1
+                  (tetromino.col + col) * grid + inset,
+                  (tetromino.row + row) * grid + inset,
+                  grid - inset * 2,
+                  grid - inset * 2
                 );
               }
             }
