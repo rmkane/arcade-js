@@ -312,6 +312,18 @@
 
           tetromino.row = row;
         }
+
+        // Space bar
+        if (e.code === "Space") {
+          // Space bar pressed - move tetromino to bottom
+          let row = tetromino.row;
+          while (isValidMove(tetromino.matrix, row + 1, tetromino.col)) {
+            row++;
+          }
+          tetromino.row = row;
+          placeTetromino();
+          return;
+        }
       });
 
       // start the game
